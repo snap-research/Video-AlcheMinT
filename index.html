@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <!-- TODO: Replace with your paper title and author names -->
+  <meta name="title" content="AlcheMinT: Fine-grained Temporal Control for Multi-Reference Consistent
+  Video Generation - Sharath Girish, Viacheslav Ivanov, Tsai-Shien Chen, Hao Chen, Aliaksandr Siarohin, Sergey Tulyakov ">
+  <!-- TODO: Write a compelling 150-160 character description of your research -->
+  <meta name="description" content="AlcheMinT enables multi-subject, temporally controlled video generation, allowing users to specify when each subject appears and disappears. We introduce an architecture that concatenates reference tokens at the token level and a RoPE-based mechanism that encodes per-subject appearance intervals. We also present a data pipeline for extracting multi-subject timestamps and a new benchmark for subject-conditioned video generation that evaluates video fidelity, subject consistency, and temporal alignment.">
+  <!-- TODO: Add 5-10 relevant keywords for your research area -->
+  <meta name="keywords" content="video generation, reference-based video generation, temporal control, multi-subject video generation, RoPE, diffusion models">
+  <!-- TODO: List all authors -->
+  <meta name="author" content="Sharath Girish, Viacheslav Ivanov, Tsai-Shien Chen, Hao Chen, Aliaksandr Siarohin, Sergey Tulyakov ">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <!-- TODO: Replace with your institution or lab name -->
+  <meta property="og:site_name" content="Snap Inc.">
+  <!-- TODO: Same as paper title above -->
+  <meta property="og:title" content="AlcheMinT: Fine-grained Temporal Control for Multi-Reference Consistent Video Generation - Sharath Girish, Viacheslav Ivanov, Tsai-Shien Chen, Hao Chen, Aliaksandr Siarohin, Sergey Tulyakov ">
+  <!-- TODO: Same as description above -->
+  <meta property="og:description" content="AlcheMinT enables multi-subject, temporally controlled video generation, allowing users to specify when each subject appears and disappears. We introduce an architecture that concatenates reference tokens at the token level and a RoPE-based mechanism that encodes per-subject appearance intervals. We also present a data pipeline for extracting multi-subject timestamps and a new benchmark for subject-conditioned video generation that evaluates video fidelity, subject consistency, and temporal alignment.">
+  <!-- TODO: Replace with your actual website URL -->
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- TODO: Replace with your lab/institution Twitter handle -->
+  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
+  <!-- TODO: Replace with first author's Twitter handle -->
+  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
+  <!-- TODO: Same as paper title above -->
+  <meta name="twitter:title" content="PAPER_TITLE">
+  <!-- TODO: Same as description above -->
+  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <!-- TODO: Same as social preview image above -->
+  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="PAPER_TITLE">
+  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
+  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <!-- TODO: Replace with your paper title and authors -->
+  <title>PAPER_TITLE - AUTHOR_NAMES | Academic Research</title>
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "PAPER_TITLE",
+    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "FIRST_AUTHOR_NAME",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "INSTITUTION_NAME"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "SECOND_AUTHOR_NAME",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "INSTITUTION_NAME"
+        }
+      }
+    ],
+    "datePublished": "2024-01-01",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CONFERENCE_OR_JOURNAL_NAME"
+    },
+    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
+    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
+    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
+    "abstract": "FULL_ABSTRACT_TEXT_HERE",
+    "citation": "BIBTEX_CITATION_HERE",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
+    },
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "RESEARCH_AREA_1"
+      },
+      {
+        "@type": "Thing", 
+        "name": "RESEARCH_AREA_2"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "INSTITUTION_OR_LAB_NAME",
+    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
+    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
+    "sameAs": [
+      "https://twitter.com/YOUR_TWITTER_HANDLE",
+      "https://github.com/YOUR_GITHUB_USERNAME"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body" style="padding-bottom: 1rem;">
+      <div class="container" style="max-width: 1400px;">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">AlcheMinT: Fine-grained Temporal Control for Multi-Reference Consistent Video Generation</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://sharath-girish.github.io/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #666;">Sharath Girish</a>,</span>
+              <span class="author-block"><a href="https://www.linkedin.com/in/vvivanov/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #666;">Viacheslav Ivanov</a>,</span>
+              <span class="author-block"><a href="https://tsaishien-chen.github.io/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #666;">Tsai-Shien Chen</a>,</span>
+              <span class="author-block"><a href="https://scholar.google.com/citations?user=3YpwwsYAAAAJ&hl=en" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #666;">Hao Chen</a>,</span>
+              <span class="author-block"><a href="https://aliaksandrsiarohin.github.io/aliaksandr-siarohin-website/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #666;">Aliaksandr Siarohin</a>,</span>
+              <span class="author-block"><a href="https://stulyakov.com/" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #666;">Sergey Tulyakov</a></span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+              <span class="author-block" style="font-size: 1.75rem;">Snap Inc.</span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-medium is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                      <span class="link-block">
+                        <span class="external-link button is-medium is-rounded is-dark" style="cursor: default; opacity: 0.7;">
+                        <span class="icon">
+                          <i class="fab fa-github"></i>
+                        </span>
+                        <span>Code (Coming Soon)</span>
+                      </span>
+                    </span>
+
+              <!-- Commented out: Supplementary, Code, arXiv buttons
+                    <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+        -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+  .video-grid-section {
+    padding: 3rem 2rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .video-grid-section.is-alt {
+    background-color: #f5f5f5;
+  }
+  .video-grid-section h2.title {
+    margin-bottom: 1.5rem;
+  }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+  }
+  .video-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .video-item.alt-bg {
+    background: #fafafa;
+  }
+  .ref-images {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+  .ref-images img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  .ref-images img.ref-1 {
+    border: 4px solid #f1c40f; /* Yellow */
+  }
+  .ref-images img.ref-2 {
+    border: 4px solid #e74c3c; /* Red */
+  }
+  .ref-images img.ref-black {
+    border: 4px solid #333333; /* Black */
+  }
+  /* Single reference overlay style */
+  .video-item-overlay {
+    position: relative;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .video-item-overlay video {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .video-item-overlay .ref-overlay {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid #333333;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background: white;
+    padding: 1px;
+  }
+  /* Multi reference overlay style */
+  .video-item-multi-overlay {
+    position: relative;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .video-item-multi-overlay video {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .video-item-multi-overlay .ref-multi-container {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .video-item-multi-overlay .ref-multi {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background: white;
+    padding: 1px;
+  }
+  .video-item-multi-overlay .ref-multi.ref-1 {
+    border: 3px solid #333333;
+  }
+  .video-item-multi-overlay .ref-multi.ref-2 {
+    border: 3px solid #333333;
+  }
+  /* Timed reference overlay style */
+  .video-item-timed {
+    position: relative;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .video-item-timed video {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .video-item-timed .ref-timed-container {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+  }
+  .video-item-timed .ref-timed {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background: white;
+    padding: 1px;
+  }
+  .video-item-timed .ref-timed.ref-1 {
+    border: 4px solid #f1c40f;
+  }
+  .video-item-timed .time-label {
+    margin-top: 4px;
+    padding: 2px 8px;
+    background: rgba(0,0,0,0.7);
+    color: #f1c40f;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  /* Animation modes */
+  .video-item-timed .ref-timed-container.anim-sudden {
+    transition: none;
+  }
+  .video-item-timed .ref-timed-container.anim-sudden.visible {
+    opacity: 1;
+  }
+  .video-item-timed .ref-timed-container.anim-fade {
+    transition: opacity 0.4s ease-in-out;
+  }
+  .video-item-timed .ref-timed-container.anim-fade.visible {
+    opacity: 1;
+  }
+  .video-item-timed .ref-timed-container.anim-slide {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateX(-20px);
+  }
+  .video-item-timed .ref-timed-container.anim-slide.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .video-item-timed .ref-timed-container.anim-scale {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: scale(0.5);
+  }
+  .video-item-timed .ref-timed-container.anim-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  /* Timed multi reference overlay style */
+  .video-item-timed-multi {
+    position: relative;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .video-item-timed-multi video {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .video-item-timed-multi .ref-timed-multi-container {
+    position: absolute;
+    top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+  }
+  .video-item-timed-multi .ref-timed-multi-container.ref-1-container {
+    left: 0.85rem;
+  }
+  .video-item-timed-multi .ref-timed-multi-container.ref-2-container {
+    right: 0.85rem;
+  }
+  .video-item-timed-multi .ref-timed-multi {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background: white;
+    padding: 1px;
+  }
+  .video-item-timed-multi .ref-timed-multi.ref-1 {
+    border: 4px solid #f1c40f;
+  }
+  .video-item-timed-multi .ref-timed-multi.ref-2 {
+    border: 4px solid #e74c3c;
+  }
+  .video-item-timed-multi .time-label-multi {
+    margin-top: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  .video-item-timed-multi .time-label-multi.label-1 {
+    background: rgba(0,0,0,0.7);
+    color: #f1c40f;
+  }
+  .video-item-timed-multi .time-label-multi.label-2 {
+    background: rgba(0,0,0,0.7);
+    color: #e74c3c;
+  }
+  /* Animation modes for timed multi */
+  .video-item-timed-multi .ref-timed-multi-container.anim-sudden {
+    transition: none;
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-sudden.visible {
+    opacity: 1;
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-fade {
+    transition: opacity 0.4s ease-in-out;
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-fade.visible {
+    opacity: 1;
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-slide.ref-1-container {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateX(-20px);
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-slide.ref-1-container.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-slide.ref-2-container {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateX(20px);
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-slide.ref-2-container.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-scale {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: scale(0.5);
+  }
+  .video-item-timed-multi .ref-timed-multi-container.anim-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .video-item video {
+    flex: 1;
+    max-width: 100%;
+    border-radius: 4px;
+  }
+  @media (min-width: 1800px) {
+    .video-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 1400px) {
+    .video-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 1100px) {
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 700px) {
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+    .video-grid-section {
+      padding: 2rem 1rem;
+    }
+  }
+</style>
+
+<!-- Timed Single Reference Videos Section -->
+<section class="video-grid-section" style="padding-top: 0.5rem; padding-bottom: 1rem;">
+  <p class="has-text-centered mb-4" style="color: #000000; font-size: 1.5rem;">AlcheMinT enables customized text-to-video generation with input reference conditions as well as corresponding timestamp intervals controlling when references appear in the generated video.</p>
+  
+  <!-- Animation mode: change data-animation to "sudden", "fade", "slide", or "scale" -->
+  <div class="video-grid" data-animation="scale" style="gap: 0.75rem;">
+      <div class="video-item-timed" data-start-frame="40" data-end-frame="62" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/10.mp4" type="video/mp4">
+      </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/10_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">3.3s - 5.2s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="21" data-end-frame="44" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/13.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/13_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">1.8s - 3.7s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="30" data-end-frame="66" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/14.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/14_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">2.5s - 5.5s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="4" data-end-frame="35" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/1.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/1_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">0.3s - 2.9s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="21" data-end-frame="68" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/2.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/2_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">1.8s - 5.7s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="24" data-end-frame="45" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/3.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/3_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">2.0s - 3.8s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="21" data-end-frame="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/4.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/4_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">1.8s - 5.8s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="13" data-end-frame="66" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/5.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/5_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">1.1s - 5.5s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="33" data-end-frame="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/6.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/6_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">2.8s - 5.8s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="4" data-end-frame="71" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/7.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/7_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">0.3s - 5.9s</span>
+        </div>
+      </div>
+      <!-- Hidden: 8.mp4
+      <div class="video-item-timed" data-start-frame="6" data-end-frame="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/8.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/8_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">0.5s - 5.8s</span>
+        </div>
+      </div>
+      -->
+      <!-- Hidden: 9.mp4
+      <div class="video-item-timed" data-start-frame="4" data-end-frame="71" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/9.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/9_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">0.3s - 5.9s</span>
+        </div>
+      </div>
+      -->
+      <div class="video-item-timed" data-start-frame="13" data-end-frame="66" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/11.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/11_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">1.1s - 5.5s</span>
+        </div>
+      </div>
+      <div class="video-item-timed" data-start-frame="30" data-end-frame="68" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video">
+          <source src="static/videos/timed_single_reference/12.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-container">
+          <img src="static/videos/timed_single_reference/12_ref_1.png" alt="Reference 1" class="ref-timed ref-1">
+          <span class="time-label">2.5s - 5.7s</span>
+        </div>
+    </div>
+  </div>
+</section>
+<!-- End Timed Single Reference Videos Section -->
+
+<!-- Paper abstract -->
+<section class="section hero" style="background-color: #f5f5f5;">
+  <div class="container" style="max-width: 1200px;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified" style="font-size: 1.25rem; line-height: 1.8;">
+          <p>
+            Recent advances in subject-driven video generation with large diffusion models have enabled personalized content synthesis conditioned on user-provided subjects.
+However, existing methods lack fine-grained temporal control over subject appearance and disappearance, which are essential for applications such as compositional video synthesis, storyboarding, and controllable animation.
+We propose AlcheMinT, a unified framework that introduces explicit timestamps conditioning for subject-driven video generation.
+Our approach introduces a novel positional encoding mechanism that unlocks the encoding of temporal intervals, associated in our case with subject identities, while seamlessly integrating with the pretrained video generation model positional embeddings.
+Additionally, we incorporate subject-descriptive text tokens to strengthen binding between visual identity and video captions, mitigating ambiguity during generation.
+Through token-wise concatenation, AlcheMinT avoids any additional cross-attention modules and incurs negligible parameter overhead.
+We establish a benchmark evaluating multiple subject identity preservation, video fidelity, and temporal adherence.
+Experimental results demonstrate that AlcheMinT achieves visual quality matching state-of-the-art video personalization methods, while, for the first time, enabling precise temporal control over multi-subject generation within videos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Timed Multi Reference Videos Section -->
+<section class="video-grid-section is-alt">
+  <h2 class="title is-3 has-text-centered">Timestep-Controlled Multi Reference Video Generation</h2>
+  <p class="has-text-centered mb-4" style="color: #666; font-size: 1.3rem;">Our framework allows for multiple reference conditions as well, with independent input temporal intervals which may or may not overlap. Yellow boxes represent the first reference, and red boxes represent the second reference.</p>
+  
+  <!-- Animation mode: change data-animation to "sudden", "fade", "slide", or "scale" -->
+  <div class="video-grid" data-animation="scale">
+      <div class="video-item-timed-multi" data-ref1-start="0" data-ref1-end="72" data-ref2-start="24" data-ref2-end="72" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/1.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/1_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.0s - 6.0s</span>
+      </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/1_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">2.0s - 6.0s</span>
+      </div>
+     </div>
+      <div class="video-item-timed-multi" data-ref1-start="2" data-ref1-end="67" data-ref2-start="27" data-ref2-end="66" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/2.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/2_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.2s - 5.6s</span>
+    </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/2_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">2.3s - 5.5s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="3" data-ref1-end="24" data-ref2-start="27" data-ref2-end="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/3.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/3_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.3s - 2.0s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/3_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">2.3s - 5.8s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="16" data-ref1-end="69" data-ref2-start="21" data-ref2-end="68" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/4.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/4_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">1.3s - 5.8s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/4_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">1.8s - 5.7s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="30" data-ref1-end="71" data-ref2-start="33" data-ref2-end="71" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/5.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/5_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">2.5s - 5.9s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/5_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">2.8s - 5.9s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="4" data-ref1-end="68" data-ref2-start="54" data-ref2-end="68" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/6.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/6_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.3s - 5.7s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/6_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">4.5s - 5.7s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="4" data-ref1-end="69" data-ref2-start="16" data-ref2-end="68" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/7.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/7_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.3s - 5.8s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/7_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">1.3s - 5.7s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="36" data-ref1-end="66" data-ref2-start="7" data-ref2-end="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/8.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/8_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">3.0s - 5.5s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/8_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">0.6s - 5.8s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="18" data-ref1-end="69" data-ref2-start="17" data-ref2-end="71" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/9.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/9_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">1.5s - 5.8s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/9_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">1.4s - 5.9s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="4" data-ref1-end="65" data-ref2-start="40" data-ref2-end="56" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/10.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/10_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.3s - 5.4s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/10_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">3.3s - 4.7s</span>
+        </div>
+      </div>
+      <div class="video-item-timed-multi" data-ref1-start="16" data-ref1-end="69" data-ref2-start="21" data-ref2-end="72" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/11.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/11_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">1.3s - 5.8s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/11_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">1.8s - 6.0s</span>
+        </div>
+      </div>
+      <!-- Hidden: 12.mp4
+      <div class="video-item-timed-multi" data-ref1-start="21" data-ref1-end="48" data-ref2-start="6" data-ref2-end="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/12.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/12_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">1.8s - 4.0s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/12_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">0.5s - 5.8s</span>
+        </div>
+      </div>
+      -->
+      <div class="video-item-timed-multi" data-ref1-start="6" data-ref1-end="36" data-ref2-start="4" data-ref2-end="69" data-fps="12">
+        <video autoplay muted loop playsinline preload="auto" class="timed-video-multi">
+          <source src="static/videos/timed_multi_reference/13.mp4" type="video/mp4">
+        </video>
+        <div class="ref-timed-multi-container ref-1-container">
+          <img src="static/videos/timed_multi_reference/13_ref_1.png" alt="Reference 1" class="ref-timed-multi ref-1">
+          <span class="time-label-multi label-1">0.5s - 3.0s</span>
+        </div>
+        <div class="ref-timed-multi-container ref-2-container">
+          <img src="static/videos/timed_multi_reference/13_ref_2.png" alt="Reference 2" class="ref-timed-multi ref-2">
+          <span class="time-label-multi label-2">0.3s - 5.8s</span>
+  </div>
+</div>
+</div>
+</section>
+<!-- End Timed Multi Reference Videos Section -->
+
+<!-- Single Reference Videos Section -->
+<section class="video-grid-section">
+  <h2 class="title is-3 has-text-centered">Single-Reference Video Generation</h2>
+  <p class="has-text-centered mb-4" style="color: #666; font-size: 1.3rem;">We generalize to the standard task of single-reference video generation by providing timestamps which span the entire duration of the video. We obtain high fidelity subject-consistent videos for a wide variety of reference images.</p>
+  
+  <div class="video-grid">
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/1.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/1_ref_1.png" alt="Reference 1" class="ref-overlay">
+          </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/2.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/2_ref_1.png" alt="Reference 1" class="ref-overlay">
+        </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/3.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/3_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/4.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/4_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/5.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/5_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/6.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/6_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/7.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/7_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/8.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/8_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <!-- Hidden: 9.mp4
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/9.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/9_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      -->
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/10.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/10_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/11.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/11_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/12.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/12_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/13.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/13_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/14.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/14_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/15.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/15_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/16.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/16_ref_1.png" alt="Reference 1" class="ref-overlay">
+      </div>
+      <div class="video-item-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/single_reference/17.mp4" type="video/mp4">
+        </video>
+        <img src="static/videos/single_reference/17_ref_1.png" alt="Reference 1" class="ref-overlay">
+    </div>
+  </div>
+</section>
+<!-- End Single Reference Videos Section -->
+
+<!-- Multi Reference Videos Section -->
+<section class="video-grid-section is-alt">
+  <h2 class="title is-3 has-text-centered">Multi Reference Video Generation</h2>
+  <p class="has-text-centered mb-4" style="color: #666; font-size: 1.3rem;">Our framework allows multiple reference conditions with different combinations of subjects, objects generating videos with complex interactions as provided by the text prompt.</p>
+  <div class="video-grid">
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/1.mp4" type="video/mp4">
+          </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/1_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/1_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/2.mp4" type="video/mp4">
+          </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/2_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/2_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/3.mp4" type="video/mp4">
+          </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/3_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/3_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/4.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/4_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/4_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/5.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/5_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/5_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/6.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/6_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/6_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/7.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/7_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/7_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/8.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/8_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/8_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/9.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/9_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/9_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/10.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/10_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/10_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/11.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/11_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/11_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+        </div>
+      </div>
+      <div class="video-item-multi-overlay">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="static/videos/multi_reference/12.mp4" type="video/mp4">
+        </video>
+        <div class="ref-multi-container">
+          <img src="static/videos/multi_reference/12_ref_1.png" alt="Reference 1" class="ref-multi ref-1">
+          <img src="static/videos/multi_reference/12_ref_2.png" alt="Reference 2" class="ref-multi ref-2">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Multi Reference Videos Section -->
+
+<!-- Method Section -->
+<section class="section" style="background-color: #f5f5f5; padding: 3rem 2rem;">
+  <div class="container" style="max-width: 1600px; width: 85%;">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <p class="has-text-justified mb-5" style="font-size: 1.25rem; line-height: 1.8; max-width: 100%;">
+      Our approach introduces a novel temporal conditioning mechanism for subject-driven video generation. 
+      We encode reference images and their corresponding temporal intervals using a unified framework that 
+      seamlessly integrates with pretrained video diffusion models. The key innovation lies in our 
+      RoPE-based positional encoding that captures per-subject appearance intervals, enabling precise 
+      control over when each reference appears in the generated video.
+    </p>
+    <div class="has-text-centered">
+      <img src="static/approach.png" alt="Method Overview" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+  </section>
+<!-- End Method Section -->
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
+  title={Your Paper Title Here},
+  author={First Author and Second Author and Third Author},
+  journal={Conference/Journal Name},
+  year={2024},
+  url={https://your-domain.com/your-project-page}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+<!-- Timed Reference Image Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // === Single Reference Timed Videos ===
+  // Animation mode is read from data-animation attribute on .video-grid
+  // Options: "sudden", "fade", "slide", "scale"
+  const singleGrid = document.querySelector('.video-item-timed')?.closest('.video-grid');
+  const singleAnimMode = singleGrid?.dataset.animation || 'scale';
+  const timedContainers = document.querySelectorAll('.video-item-timed');
+  
+  timedContainers.forEach(container => {
+    const video = container.querySelector('.timed-video');
+    const refContainer = container.querySelector('.ref-timed-container');
+    
+    if (!video || !refContainer) return;
+    
+    // Apply animation mode class
+    refContainer.classList.add('anim-' + singleAnimMode);
+    
+    const startFrame = parseInt(container.dataset.startFrame);
+    const endFrame = parseInt(container.dataset.endFrame);
+    const fps = parseInt(container.dataset.fps) || 12;
+    
+    const startTime = startFrame / fps;
+    const endTime = endFrame / fps;
+    
+    function updateVisibility() {
+      const currentTime = video.currentTime;
+      if (currentTime >= startTime && currentTime <= endTime) {
+        refContainer.classList.add('visible');
+      } else {
+        refContainer.classList.remove('visible');
+      }
+    }
+    
+    video.addEventListener('timeupdate', updateVisibility);
+    video.addEventListener('seeked', updateVisibility);
+    updateVisibility();
+  });
+
+  // === Multi Reference Timed Videos ===
+  // Animation mode is read from data-animation attribute on .video-grid
+  const multiGrid = document.querySelector('.video-item-timed-multi')?.closest('.video-grid');
+  const multiAnimMode = multiGrid?.dataset.animation || 'scale';
+  const timedMultiContainers = document.querySelectorAll('.video-item-timed-multi');
+  
+  timedMultiContainers.forEach(container => {
+    const video = container.querySelector('.timed-video-multi');
+    const ref1Container = container.querySelector('.ref-1-container');
+    const ref2Container = container.querySelector('.ref-2-container');
+    
+    if (!video) return;
+    
+    // Apply animation mode class
+    if (ref1Container) ref1Container.classList.add('anim-' + multiAnimMode);
+    if (ref2Container) ref2Container.classList.add('anim-' + multiAnimMode);
+    
+    const fps = parseInt(container.dataset.fps) || 12;
+    const ref1Start = parseInt(container.dataset.ref1Start) / fps;
+    const ref1End = parseInt(container.dataset.ref1End) / fps;
+    const ref2Start = parseInt(container.dataset.ref2Start) / fps;
+    const ref2End = parseInt(container.dataset.ref2End) / fps;
+    
+    function updateVisibility() {
+      const currentTime = video.currentTime;
+      
+      if (ref1Container) {
+        if (currentTime >= ref1Start && currentTime <= ref1End) {
+          ref1Container.classList.add('visible');
+        } else {
+          ref1Container.classList.remove('visible');
+        }
+      }
+      
+      if (ref2Container) {
+        if (currentTime >= ref2Start && currentTime <= ref2End) {
+          ref2Container.classList.add('visible');
+        } else {
+          ref2Container.classList.remove('visible');
+        }
+      }
+    }
+    
+    video.addEventListener('timeupdate', updateVisibility);
+    video.addEventListener('seeked', updateVisibility);
+    updateVisibility();
+  });
+});
+</script>
+
+  </body>
+  </html>
