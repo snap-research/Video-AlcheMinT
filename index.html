@@ -184,10 +184,10 @@
                   <div class="column has-text-centered">
                     <div class="publication-links" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                       <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        <a href="https://arxiv.org/abs/2512.10943" target="_blank"
                         class="external-link button is-medium is-rounded is-dark" style="display: inline-flex; align-items: center;">
                         <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
+                          <i class="ai ai-arxiv"></i>
                         </span>
                         <span>Paper</span>
                       </a>
@@ -244,10 +244,10 @@
 
 <style>
   .video-grid-section {
-    padding: 3rem 2rem;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+    padding: 3rem 2rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
     background-color: #1a1a2e;
   }
   .video-grid-section.is-alt {
@@ -261,12 +261,12 @@
     color: #c0c0c0;
   }
   .video-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 1800px;
-    margin: 0 auto;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    max-width: 1800px !important;
+    margin: 0 auto !important;
   }
   .video-item {
     display: flex;
@@ -544,15 +544,15 @@
   }
   @media (max-width: 1100px) {
     .video-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr) !important;
     }
   }
   @media (max-width: 700px) {
     .video-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
     }
     .video-grid-section {
-      padding: 2rem 1rem;
+      padding: 2rem 1rem !important;
     }
   }
 </style>
@@ -1174,12 +1174,15 @@ Experimental results demonstrate that AlcheMinT achieves visual quality matching
           <span class="copy-text">Copy</span>
         </button>
       </div>
-      <pre id="bibtex-code"><code>@article{alchemint2025,
-  title={AlcheMinT: Fine-grained Temporal Control for Multi-Reference Consistent Video Generation},
-  author={Girish, Sharath and Ivanov, Viacheslav and Chen, Tsai-Shien and Chen, Hao and Siarohin, Aliaksandr and Tulyakov, Sergey},
-  journal={arXiv preprint},
-  year={2025}
-}</code></pre>
+      <pre id="bibtex-code"><code>@misc{girish2025alchemintfinegrainedtemporalcontrol,
+        title={AlcheMinT: Fine-grained Temporal Control for Multi-Reference Consistent Video Generation}, 
+        author={Sharath Girish and Viacheslav Ivanov and Tsai-Shien Chen and Hao Chen and Aliaksandr Siarohin and Sergey Tulyakov},
+        year={2025},
+        eprint={2512.10943},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV},
+        url={https://arxiv.org/abs/2512.10943}, 
+  }</code></pre>
     </div>
 </section>
 <!--End BibTex citation -->
@@ -1193,7 +1196,7 @@ Experimental results demonstrate that AlcheMinT achieves visual quality matching
 
           <p style="color: #e0e0e0;">
             This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" style="color: #6dd5ed;">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" style="color: #6dd5ed;">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" style="color: #6dd5ed;">Creative
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" style="color: #6dd5ed;">Creative
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
 
